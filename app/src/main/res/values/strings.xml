@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">PrayerJournal</string>
+    <string name="save">Save Entry</string>
+    <string name="edit_Entry_btn">View/Edit Entry</string>
+    <string name="enter_prayer_hint">Enter Your Prayer here</string>
+</resources>
