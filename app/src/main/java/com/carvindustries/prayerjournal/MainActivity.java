@@ -20,7 +20,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     //public static final String FILENAME="prayerJournal.txt";
-    private DataBase Prayers = new DataBase(this);
+    private DataBase Prayers =new DataBase(this);
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,31 +35,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void addSavedEntryButton(){
         Button saveEntry = (Button)findViewById(R.id.saveEntry);
+        EntrySaver entrySav = new EntrySaver(Prayers, this);
         if (saveEntry != null) {
-            saveEntry.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v){
-                    EditText newEnt = (EditText)findViewById(R.id.NewEntry);
-                    String saveEnt = newEnt.getText().toString();
-                    // I need to create a separate class that extends/implements OncClickListener
-                    // then I can just instantiate and call an object of that type.
-                    //AlertDialog.Builder svdlg = new AlertDialog.Builder(this);
-                    //svdlg.setMessage("Saving Prayer");
-                    Prayers.addPrayer(saveEnt);
-
-                    /*
-                    try {
-                        FileOutputStream addEntry = openFileOutput(FILENAME, MODE_PRIVATE);
-                        addEntry.write(saveEnt.getBytes());
-                        addEntry.close();
-                    } catch (IOException e) {
-                        Log.d("RM","Cannot Write To File");
-                    } catch(Exception e){
-                        Log.d("RM", "Oops, there was file error");
-                    }
-                    */
-                }
-            });
+            saveEntry.setOnClickListener(entrySav);
         }
     }
     public void addEditEntryButton(){
@@ -66,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 List<String> lp = Prayers.getAllPrayer();
-                Log.d("rm", String.valueOf(lp.size()));
+
                 for(String value: lp){
                     Log.d("RM ", value);
                 }
