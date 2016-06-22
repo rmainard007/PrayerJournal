@@ -1,6 +1,7 @@
 package com.carvindustries.prayerjournal;
 
 import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,15 +16,18 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String FILENAME="prayerJournal.txt";
+    //public static final String FILENAME="prayerJournal.txt";
+    private DataBase Prayers = new DataBase(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         addSavedEntryButton();
         addEditEntryButton();
+
     }
 
     public void addSavedEntryButton(){
@@ -32,13 +36,16 @@ public class MainActivity extends AppCompatActivity {
             saveEntry.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
-                    Date now = Calendar.getInstance().getTime();
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-hh.mm.ss");
                     EditText newEnt = (EditText)findViewById(R.id.NewEntry);
-                    String saveEnt = dateFormat.format(now)+ newEnt.getText().toString();
-                    try {
-                                               
+                    String saveEnt = newEnt.getText().toString();
+                    // I need to create a separate class that extends/implements OncClickListener
+                    // then I can just instantiate and call an object of that type.
+                    //AlertDialog.Builder svdlg = new AlertDialog.Builder(this);
+                    //svdlg.setMessage("Saving Prayer");
+                    Prayers.addPrayer(saveEnt);
 
+                    /*
+                    try {
                         FileOutputStream addEntry = openFileOutput(FILENAME, MODE_PRIVATE);
                         addEntry.write(saveEnt.getBytes());
                         addEntry.close();
@@ -47,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                     } catch(Exception e){
                         Log.d("RM", "Oops, there was file error");
                     }
-
+                    */
                 }
             });
         }
@@ -58,6 +65,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                List<String> lp = Prayers.getAllPrayer();
+                Log.d("rm", String.valueOf(lp.size()));
+                for(String value: lp){
+                    Log.d("RM ", value);
+                }
 
             }
         });
