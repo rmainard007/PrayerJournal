@@ -1,6 +1,7 @@
 package com.carvindustries.prayerjournal;
 
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,10 +35,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addSavedEntryButton(){
-        Button saveEntry = (Button)findViewById(R.id.saveEntry);
+        final Button saveEntry = (Button)findViewById(R.id.saveEntry);
         EntrySaver entrySav = new EntrySaver(Prayers, this);
         if (saveEntry != null) {
+            AlertDialog.Builder buildDlg = new AlertDialog.Builder(this);
+            buildDlg.setMessage("Saving Prayer");
+            AlertDialog svdlg = buildDlg.create();
+
+            svdlg.show();
             saveEntry.setOnClickListener(entrySav);
+
+            svdlg.dismiss();
         }
     }
     public void addEditEntryButton(){

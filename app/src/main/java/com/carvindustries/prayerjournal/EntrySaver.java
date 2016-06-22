@@ -23,8 +23,7 @@ public class EntrySaver implements View.OnClickListener {
         String saveEnt = newEnt.getText().toString();
         // I need to create a separate class that extends/implements OncClickListener
         // then I can just instantiate and call an object of that type.
-        //AlertDialog.Builder svdlg = new AlertDialog.Builder(this);
-        //svdlg.setMessage("Saving Prayer");
+        newEnt.setText("");
         Prayers.addPrayer(saveEnt);
 
     }
