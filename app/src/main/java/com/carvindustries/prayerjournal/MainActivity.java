@@ -1,5 +1,6 @@
 package com.carvindustries.prayerjournal;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
@@ -54,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                Intent viewEdit = new Intent(MainActivity.this, ViewEdit.class);
+                startActivity(viewEdit);
                 List<String> lp = Prayers.getAllPrayer();
 
                 for(String value: lp){
