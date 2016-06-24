@@ -68,15 +68,14 @@ public class DataBase extends SQLiteOpenHelper {
 
         return idVal;
     }
-    public List<String> getAllPrayer(){
-        List<String> p = new ArrayList<String>();
+    public List<PrayerEntry> getAllPrayer(){
+        List<PrayerEntry> p = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        String sql = "SELECT "+PRAYER_ENTRY_TXT+ ", "+ ENTRY_DATE+ " FROM "+PRAYER_TABLE;
+        String sql = "SELECT "+ID_COL+","+PRAYER_ENTRY_TXT+ ", "+ ENTRY_DATE+ " FROM "+PRAYER_TABLE;
         Cursor cursor = db.rawQuery(sql,null);
 
         while(cursor.moveToNext()){
-            String entry = cursor.getString(1)+": "+cursor.getString(0);
-            p.add(entry);
+            p.add(new PrayerEntry(cursor.getString(1),cursor.getString(2),cursor.getInt(0)));
         }
         db.close();
 

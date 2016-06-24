@@ -1,26 +1,16 @@
 package com.carvindustries.prayerjournal;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class SaveEntry extends AppCompatActivity {
     //public static final String FILENAME="prayerJournal.txt";
     private DataBase Prayers =new DataBase(this);
 
@@ -29,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_save_entry);
         addSavedEntryButton();
         addEditEntryButton();
 
@@ -55,13 +45,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent viewEdit = new Intent(MainActivity.this, ViewEdit.class);
+                Intent viewEdit = new Intent(SaveEntry.this, ViewEdit.class);
                 startActivity(viewEdit);
-                List<String> lp = Prayers.getAllPrayer();
 
-                for(String value: lp){
-                    Log.d("RM ", value);
-                }
 
             }
         });

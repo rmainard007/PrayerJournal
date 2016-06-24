@@ -3,4 +3,8 @@
     <string name="save">Save Entry</string>
     <string name="edit_Entry_btn">View/Edit Entry</string>
     <string name="enter_prayer_hint">Enter Your Prayer here</string>
+    <string name="AddEntryButtonText">AddEntry</string>
+    <string name="edit_prayer_Button_Text">Edit Prayer</string>
+    <array name="PrayerList">
+    </array>
 </resources>
