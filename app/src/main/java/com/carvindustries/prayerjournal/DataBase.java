@@ -46,12 +46,18 @@ public class DataBase extends SQLiteOpenHelper {
 
         value.put(ID_COL, getID() +1);
         value.put(PRAYER_ENTRY_TXT, pryr);
-        Date now = Calendar.getInstance().getTime();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-hh.mm.ss");
-        String theDate = dateFormat.format(now);
-        value.put(ENTRY_DATE, theDate);
+
+        value.put(ENTRY_DATE, this.generateDate());
         db.insert(PRAYER_TABLE, null, value);
         //db.close();
+    }
+    public void editPrayerEntry(int id, String update){
+        //need to throw exception if the id does not exist
+        SQLiteDatabase db = getWritableDatabase();
+
+        String sqlupdt = "UPDATE " + PRAYER_TABLE + " SET " + PRAYER_ENTRY_TXT + " = " +
+                update + ", " + ENTRY_DATE + " = " + this.generateDate() + " WHERE " + ID_COL + " = " + id;
+        db.rawQuery(sqlupdt,null);
     }
     public int getID(){
         SQLiteDatabase db = getReadableDatabase();
@@ -69,16 +75,27 @@ public class DataBase extends SQLiteOpenHelper {
         return idVal;
     }
     public List<PrayerEntry> getAllPrayer(){
-        List<PrayerEntry> p = new ArrayList<>();
+
         SQLiteDatabase db = getReadableDatabase();
-        String sql = "SELECT "+ID_COL+","+PRAYER_ENTRY_TXT+ ", "+ ENTRY_DATE+ " FROM "+PRAYER_TABLE;
-        Cursor cursor = db.rawQuery(sql,null);
+        List<PrayerEntry> p = new ArrayList<>();
+        String sql = "SELECT "+ID_COL+", "+PRAYER_ENTRY_TXT+ ", "+ ENTRY_DATE+ " FROM "+PRAYER_TABLE;
+        Cursor cursor = db.rawQuery(sql, null);
+        int i = 0;
 
         while(cursor.moveToNext()){
             p.add(new PrayerEntry(cursor.getString(1),cursor.getString(2),cursor.getInt(0)));
+            Log.d("RM ", String.valueOf(p.get(i).getPid()));
+            i++;
         }
         db.close();
+        cursor.close();
 
         return p;
+    }
+    private String generateDate(){
+        Date now = Calendar.getInstance().getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-hh.mm.ss");
+        String theDate = dateFormat.format(now);
+        return theDate;
     }
 }
