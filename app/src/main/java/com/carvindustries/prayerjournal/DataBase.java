@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabaseLockedException;
+//import android.database.sqlite.SQLiteDatabaseLockedException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
@@ -55,9 +55,14 @@ public class DataBase extends SQLiteOpenHelper {
         //need to throw exception if the id does not exist
         SQLiteDatabase db = getWritableDatabase();
 
-        String sqlupdt = "UPDATE " + PRAYER_TABLE + " SET " + PRAYER_ENTRY_TXT + " = " +
-                update + ", " + ENTRY_DATE + " = " + this.generateDate() + " WHERE " + ID_COL + " = " + id;
-        db.rawQuery(sqlupdt,null);
+        ContentValues value = new ContentValues();
+        //value.put(ID_COL, id);
+        value.put(PRAYER_ENTRY_TXT,update);
+        value.put(ENTRY_DATE, this.generateDate());
+        //String sqlupdt = "UPDATE " + PRAYER_TABLE + " SET " + PRAYER_ENTRY_TXT + " = " +
+        //        update + ", " + ENTRY_DATE + " = " + this.generateDate() + " WHERE " + ID_COL + " = " + id;
+        db.update(PRAYER_TABLE,value,ID_COL +" = "+ id, null);
+        //db.rawQuery(sqlupdt,null);
     }
     public int getID(){
         SQLiteDatabase db = getReadableDatabase();
