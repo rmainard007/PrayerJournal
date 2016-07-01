@@ -5,6 +5,7 @@
     <string name="enter_prayer_hint">Enter Your Prayer here</string>
     <string name="AddEntryButtonText">AddEntry</string>
     <string name="edit_prayer_Button_Text">Edit Prayer</string>
+    <string name="add_prayer_update">Add Prayer Update</string>
     <array name="PrayerList">
     </array>
 </resources>
